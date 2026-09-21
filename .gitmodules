@@ -1,0 +1,3 @@
+[submodule "GBARecomp"]
+	path = GBARecomp
+	url = https://github.com/Asphaltian/GBARecomp

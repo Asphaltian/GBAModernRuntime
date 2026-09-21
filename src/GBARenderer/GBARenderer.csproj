@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="GBARenderer.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Silk.NET.MoltenVK.Native" Version="2.23.0" />
+    <PackageReference Include="Silk.NET.Vulkan" Version="2.23.0" />
+    <PackageReference Include="Silk.NET.Vulkan.Extensions.KHR" Version="2.23.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AGBModern\AGBModern.csproj" />
+  </ItemGroup>
+
+  <Target Name="LocateShaders">
+    <PropertyGroup>
+      <ShaderSource>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', 'Shaders', 'Frame.slang'))</ShaderSource>
+      <SPIRVShader>$([MSBuild]::NormalizePath('$(MSBuildProjectDirectory)', '$(IntermediateOutputPath)', 'Frame.spv'))</SPIRVShader>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="CompileShaders" DependsOnTargets="LocateShaders" Inputs="$(ShaderSource);$(MSBuildProjectFullPath)" Outputs="$(SPIRVShader)">
+    <Exec Command="slangc &quot;$(ShaderSource)&quot; -target spirv -entry DrawFrame -o &quot;$(SPIRVShader)&quot;" />
+  </Target>
+
+  <Target Name="EmbedShaders" BeforeTargets="AssignTargetPaths" DependsOnTargets="CompileShaders">
+    <ItemGroup>
+      <EmbeddedResource Include="$(SPIRVShader)" LogicalName="Frame.spv" />
+    </ItemGroup>
+  </Target>
+
+</Project>
