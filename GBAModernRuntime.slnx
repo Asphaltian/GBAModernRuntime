@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/GBARecomp/" />
+  <Folder Name="/GBARecomp/src/">
+    <Project Path="GBARecomp/src/GBARecomp/GBARecomp.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/AGBModern/AGBModern.csproj" />
+    <Project Path="src/GBARenderer/GBARenderer.csproj" />
+    <Project Path="src/LibRecomp/LibRecomp.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AGBModern.Tests/AGBModern.Tests.csproj" />
+    <Project Path="tests/GBARenderer.Tests/GBARenderer.Tests.csproj" />
+    <Project Path="tests/LibRecomp.Tests/LibRecomp.Tests.csproj" />
+    <Project Path="tests/Recompilation.Tests/Recompilation.Tests.csproj" />
+  </Folder>
+</Solution>
